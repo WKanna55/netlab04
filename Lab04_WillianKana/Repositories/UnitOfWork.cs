@@ -1,5 +1,5 @@
 using Lab04_WillianKana.Data;
-using Lab04_WillianKana.Interfaces;
+using Lab04_WillianKana.Interfaces.Repositories;
 
 namespace Lab04_WillianKana.Repositories;
 

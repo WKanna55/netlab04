@@ -1,6 +1,8 @@
 using Lab04_WillianKana.Data;
-using Lab04_WillianKana.Interfaces;
+using Lab04_WillianKana.Interfaces.Repositories;
+using Lab04_WillianKana.Interfaces.Services;
 using Lab04_WillianKana.Repositories;
+using Lab04_WillianKana.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,8 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//agregar Repositorios
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+//agregar servicios
+builder.Services.AddScoped<IClienteService, ClienteService>();
 
 // Obtener la cadena de conexión desde appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

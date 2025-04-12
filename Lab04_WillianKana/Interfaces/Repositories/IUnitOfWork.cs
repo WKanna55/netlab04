@@ -1,4 +1,4 @@
-namespace Lab04_WillianKana.Interfaces;
+namespace Lab04_WillianKana.Interfaces.Repositories;
 
 public interface IUnitOfWork : IDisposable
 {

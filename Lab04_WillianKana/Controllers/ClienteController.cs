@@ -1,6 +1,6 @@
-using Lab04_WillianKana.Data;
-using Lab04_WillianKana.Entities;
-using Lab04_WillianKana.Interfaces;
+using Lab04_WillianKana.Dtos;
+using Lab04_WillianKana.Interfaces.Repositories;
+using Lab04_WillianKana.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab04_WillianKana.Controllers;
@@ -9,26 +9,39 @@ namespace Lab04_WillianKana.Controllers;
 [Route("api/[controller]")]
 public class ClienteController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IClienteService _clienteService;
 
-    public ClienteController(IUnitOfWork unitOfWork)
+    public ClienteController(IClienteService clienteService)
     {
-        _unitOfWork = unitOfWork;
+        _clienteService = clienteService;
     }
+
+    //[HttpPost]
+    //public IActionResult CrearCliente(Cliente cliente)
+    //{
+    //    _unitOfWork.Clientes.Add(cliente);
+    //    _unitOfWork.SaveChanges();
+    //    return Ok("Cliente creado con exito");
+    //}
+
+    //[HttpGet]
+    //public IActionResult ObtenerClientes()
+    //{
+    //    var clientes = _unitOfWork.Clientes.GetAll();
+    //    return Ok(clientes);
+    //}
 
     [HttpPost]
-    public IActionResult CrearCliente(Cliente cliente)
+    public IActionResult Post(ClientePostDto clienteDto)
     {
-        _unitOfWork.Clientes.Add(cliente);
-        _unitOfWork.SaveChanges();
-        return Ok("Cliente creado con exito");
-    }
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        var cliente = _clienteService.Add(clienteDto);
 
-    [HttpGet]
-    public IActionResult ObtenerClientes()
-    {
-        var clientes = _unitOfWork.Clientes.GetAll();
-        return Ok(clientes);
+        return Ok(cliente);
     }
     
 }
