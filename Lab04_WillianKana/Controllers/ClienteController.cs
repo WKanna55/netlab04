@@ -16,7 +16,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post(ClientePostDto clienteDto)
+    public IActionResult Post([FromBody]ClientePostDto clienteDto)
     {
         if (!ModelState.IsValid)
         {
