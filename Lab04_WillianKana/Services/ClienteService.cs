@@ -34,10 +34,16 @@ public class ClienteService : IClienteService
         }
     }
 
-    public IEnumerable<Cliente> GetAll()
+    public IEnumerable<ClienteGetDto> GetAll()
     {
         var clientes = _unitOfWork.Clientes.GetAll();
-        return clientes;
+        var clientesDto = clientes.Select(c => new ClienteGetDto
+        {
+            Clienteid = c.Clienteid,
+            Nombre = c.Nombre,
+            Correo = c.Correo
+        });
+        return clientesDto;
     }
     
 }

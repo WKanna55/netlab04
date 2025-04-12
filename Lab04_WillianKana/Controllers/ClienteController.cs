@@ -15,21 +15,6 @@ public class ClienteController : ControllerBase
         _clienteService = clienteService;
     }
 
-    //[HttpPost]
-    //public IActionResult CrearCliente(Cliente cliente)
-    //{
-    //    _unitOfWork.Clientes.Add(cliente);
-    //    _unitOfWork.SaveChanges();
-    //    return Ok("Cliente creado con exito");
-    //}
-
-    //[HttpGet]
-    //public IActionResult ObtenerClientes()
-    //{
-    //    var clientes = _unitOfWork.Clientes.GetAll();
-    //    return Ok(clientes);
-    //}
-
     [HttpPost]
     public IActionResult Post(ClientePostDto clienteDto)
     {
