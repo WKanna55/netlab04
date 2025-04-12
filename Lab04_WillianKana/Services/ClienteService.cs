@@ -33,5 +33,11 @@ public class ClienteService : IClienteService
             throw;
         }
     }
+
+    public IEnumerable<Cliente> GetAll()
+    {
+        var clientes = _unitOfWork.Clientes.GetAll();
+        return clientes;
+    }
     
 }

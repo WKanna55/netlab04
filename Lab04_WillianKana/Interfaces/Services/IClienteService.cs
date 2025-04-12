@@ -6,4 +6,5 @@ namespace Lab04_WillianKana.Interfaces.Services;
 public interface IClienteService
 {
     Cliente Add(ClientePostDto clienteDto);
+    IEnumerable<Cliente> GetAll();
 }
