@@ -16,22 +16,22 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody]ClientePostDto clienteDto)
+    public async Task<IActionResult> Post([FromBody]ClientePostDto clienteDto)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
         
-        var cliente = _clienteService.Add(clienteDto);
+        var cliente = await _clienteService.Add(clienteDto);
 
         return Ok(cliente);
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var clientes = _clienteService.GetAll();
+        var clientes = await _clienteService.GetAll();
         return Ok(clientes);
     }
     

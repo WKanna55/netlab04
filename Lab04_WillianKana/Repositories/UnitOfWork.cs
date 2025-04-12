@@ -14,9 +14,9 @@ public class UnitOfWork : IUnitOfWork
         Clientes = clienteRepository;
     }
 
-    public int SaveChanges()
+    public async Task<int> SaveChanges()
     {
-        return _context.SaveChanges();
+        return await _context.SaveChangesAsync();
     }
 
     public void Dispose()

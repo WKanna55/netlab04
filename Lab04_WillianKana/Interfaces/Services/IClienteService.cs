@@ -5,6 +5,6 @@ namespace Lab04_WillianKana.Interfaces.Services;
 
 public interface IClienteService
 {
-    Cliente Add(ClientePostDto clienteDto);
-    IEnumerable<ClienteGetDto> GetAll();
+    Task<Cliente> Add(ClientePostDto clienteDto);
+    Task<IEnumerable<ClienteGetDto>> GetAll();
 }

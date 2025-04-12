@@ -14,29 +14,21 @@ public class ClienteService : IClienteService
         _unitOfWork = unitOfWork;
     }
 
-    public Cliente Add(ClientePostDto clienteDto)
+    public async Task<Cliente> Add(ClientePostDto clienteDto)
     {
         var cliente = new Cliente
         {
             Nombre = clienteDto.Nombre,
             Correo = clienteDto.Correo
         };
-        try
-        {
-            _unitOfWork.Clientes.Add(cliente);
-            _unitOfWork.SaveChanges();
-            return cliente;
-        }
-        catch (Exception)
-        {
-            _unitOfWork.Dispose();  // dispose
-            throw;
-        }
+        await _unitOfWork.Clientes.Add(cliente);
+        await _unitOfWork.SaveChanges();
+        return cliente;
     }
 
-    public IEnumerable<ClienteGetDto> GetAll()
+    public async Task<IEnumerable<ClienteGetDto>> GetAll()
     {
-        var clientes = _unitOfWork.Clientes.GetAll();
+        var clientes = await _unitOfWork.Clientes.GetAll();
         var clientesDto = clientes.Select(c => new ClienteGetDto
         {
             Clienteid = c.Clienteid,

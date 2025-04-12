@@ -1,6 +1,7 @@
 using Lab04_WillianKana.Data;
 using Lab04_WillianKana.Entities;
 using Lab04_WillianKana.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lab04_WillianKana.Repositories;
 
@@ -13,29 +14,21 @@ public class ClienteRepository : IClienteRepository
         _context = context;
     }
 
-    public Cliente GetById(int id)
-    {
-        return _context.Set<Cliente>().Find(id);
-    }
+    public async Task<Cliente?> GetById(int id) => await _context.Set<Cliente>().FindAsync(id);
 
-    public IEnumerable<Cliente> GetAll()
-    {
-        return _context.Set<Cliente>().ToList();
-    }
+    public async Task<IEnumerable<Cliente>> GetAll() => await _context.Set<Cliente>().ToListAsync();
 
-    public void Add(Cliente cliente)
-    {
-        _context.Set<Cliente>().Add(cliente);
-    }
+    public async Task Add(Cliente cliente) => await _context.Set<Cliente>().AddAsync(cliente);
 
-    public void Update(Cliente cliente)
+    public Task Update(Cliente cliente)
     {
         _context.Set<Cliente>().Update(cliente);
+        return Task.CompletedTask;
     }
 
-    public void Delete(int id)
+    public async Task Delete(int id)
     {
-        var cliente = _context.Set<Cliente>().Find(id);
+        var cliente = await _context.Set<Cliente>().FindAsync(id);
         if (cliente != null)
         {
             _context.Set<Cliente>().Remove(cliente);
