@@ -18,6 +18,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IOrdeneService, OrdeneService>();
 builder.Services.AddScoped<IPagoService, PagoService>();
+// servicios con un servicio base
+builder.Services.AddScoped<IDetallesordenService, DetallesodenService>();
 
 // Obtener la cadena de conexión desde appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
