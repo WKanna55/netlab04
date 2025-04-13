@@ -21,7 +21,8 @@ public class ClienteRepository : Repository<Cliente>, IClienteRepository
 
     public async Task<Cliente> GetByIdWithRealtions(int id)
     {
-        var cliente = await _context.Clientes.Include(c => c.Ordenes).FirstOrDefaultAsync(c => c.Clienteid == id);
+        var cliente = await _context.Clientes
+            .Include(c => c.Ordenes).FirstOrDefaultAsync(c => c.Clienteid == id);
         return cliente!;
     }
     

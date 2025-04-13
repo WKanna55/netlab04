@@ -8,11 +8,14 @@ public class UnitOfWork : IUnitOfWork
     private readonly ApplicationDbContext _context;
     private readonly Dictionary<Type, object> _repositories = new(); // Repositorio generico
     public IClienteRepository Clientes { get; }
+    public ICategoriaRepository Categorias { get; }
 
-    public UnitOfWork(ApplicationDbContext context, IClienteRepository clienteRepository)
+    public UnitOfWork(ApplicationDbContext context, IClienteRepository clienteRepository
+        , ICategoriaRepository categoriaRepository)
     {
         _context = context;
         Clientes = clienteRepository;
+        Categorias = categoriaRepository;
     }
 
     /*

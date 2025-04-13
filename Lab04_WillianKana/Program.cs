@@ -13,6 +13,8 @@ builder.Services.AddControllersWithViews();
 //agregar Repositorios
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+// repositorio especifico para uso con servicio base
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
 //agregar servicios
 builder.Services.AddScoped<IClienteService, ClienteService>();
@@ -21,6 +23,7 @@ builder.Services.AddScoped<IPagoService, PagoService>();
 // servicios con un servicio base
 builder.Services.AddScoped<IDetallesordenService, DetallesodenService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
 // Obtener la cadena de conexión desde appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
