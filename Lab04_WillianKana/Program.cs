@@ -20,6 +20,7 @@ builder.Services.AddScoped<IOrdeneService, OrdeneService>();
 builder.Services.AddScoped<IPagoService, PagoService>();
 // servicios con un servicio base
 builder.Services.AddScoped<IDetallesordenService, DetallesodenService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
 
 // Obtener la cadena de conexión desde appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
