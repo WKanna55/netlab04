@@ -25,13 +25,12 @@ public class Repository<T> : IRepository<T> where T : class
         return Task.CompletedTask;
     }
 
-    public virtual async Task Delete(int id)
+    public virtual async Task<bool> Delete(int id)
     {
         var entity = await _context.Set<T>().FindAsync(id);
-        if (entity != null)
-        {
-            _context.Set<T>().Remove(entity);
-        }
+        if (entity == null) return false;
+        _context.Set<T>().Remove(entity);
+        return true;
     }
 
 }

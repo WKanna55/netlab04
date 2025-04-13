@@ -15,24 +15,60 @@ public class ClienteController : ControllerBase
         _clienteService = clienteService;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var clientes = await _clienteService.GetAll();
+        return Ok(clientes);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById([FromRoute]int id)
+    {
+        var cliente = await _clienteService.GetById(id);
+        if (cliente == null) 
+            return NotFound();
+        return Ok(cliente);
+    }
+    
     [HttpPost]
     public async Task<IActionResult> Post([FromBody]ClientePostDto clienteDto)
     {
-        if (!ModelState.IsValid)
-        {
+        if (!ModelState.IsValid) 
             return BadRequest(ModelState);
-        }
         
         var cliente = await _clienteService.Add(clienteDto);
 
         return Ok(cliente);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put([FromRoute] int id, [FromBody] ClientePutDto clienteDto)
     {
-        var clientes = await _clienteService.GetAll();
-        return Ok(clientes);
+        if (!ModelState.IsValid) 
+            return BadRequest(ModelState);
+        var updated = await _clienteService.Update(id, clienteDto);
+        if (updated == null) 
+            return NotFound(new { message = $"Cliente con ID {id} no encontrado." });
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        var deleted = await _clienteService.Delete(id);
+        if (!deleted) 
+            return NotFound(new { message = "Cliente no encontrado" });
+        return NoContent();
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> Patch([FromRoute] int id, [FromBody] ClientePatchDto clienteDto)
+    {
+        var patched = await _clienteService.Patch(id, clienteDto);
+        if (patched == null) 
+            return NotFound(new { message = $"Cliente con ID {id} no encontrado." });
+        return NoContent();
     }
     
 }
