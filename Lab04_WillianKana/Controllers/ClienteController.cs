@@ -1,4 +1,4 @@
-using Lab04_WillianKana.Dtos;
+using Lab04_WillianKana.Dtos.Cliente;
 using Lab04_WillianKana.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +15,10 @@ public class ClienteController : ControllerBase
         _clienteService = clienteService;
     }
 
+    /*
+     * Esta funcion usa el repositorio especifico del Cliente para traer todos los datos incluidos
+     * los que estan en tablas relacionadas.
+     */
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -27,7 +31,7 @@ public class ClienteController : ControllerBase
     {
         var cliente = await _clienteService.GetById(id);
         if (cliente == null) 
-            return NotFound();
+            return NotFound(new { message = $"Cliente con ID {id} no encontrado." });
         return Ok(cliente);
     }
     
@@ -48,7 +52,7 @@ public class ClienteController : ControllerBase
         if (!ModelState.IsValid) 
             return BadRequest(ModelState);
         var updated = await _clienteService.Update(id, clienteDto);
-        if (updated == null) 
+        if (!updated) 
             return NotFound(new { message = $"Cliente con ID {id} no encontrado." });
         return NoContent();
     }
@@ -61,12 +65,15 @@ public class ClienteController : ControllerBase
             return NotFound(new { message = "Cliente no encontrado" });
         return NoContent();
     }
-
+    
+    /*
+     * Metodo Patch Adicional
+     */
     [HttpPatch("{id}")]
     public async Task<IActionResult> Patch([FromRoute] int id, [FromBody] ClientePatchDto clienteDto)
     {
         var patched = await _clienteService.Patch(id, clienteDto);
-        if (patched == null) 
+        if (!patched) 
             return NotFound(new { message = $"Cliente con ID {id} no encontrado." });
         return NoContent();
     }

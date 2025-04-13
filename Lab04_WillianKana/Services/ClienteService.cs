@@ -1,4 +1,5 @@
-using Lab04_WillianKana.Dtos;
+using Lab04_WillianKana.Dtos.Cliente;
+using Lab04_WillianKana.Dtos.Ordene;
 using Lab04_WillianKana.Entities;
 using Lab04_WillianKana.Interfaces.Repositories;
 using Lab04_WillianKana.Interfaces.Services;
@@ -17,24 +18,40 @@ public class ClienteService : IClienteService
     
     public async Task<IEnumerable<ClienteGetDto>> GetAll()
     {
-        var clientes = await _unitOfWork.Repository<Cliente>().GetAll();;
+        var clientes = await _unitOfWork.Clientes.GetAllWithRealtions();
         var clientesDto = clientes.Select(c => new ClienteGetDto
         {
             Clienteid = c.Clienteid,
             Nombre = c.Nombre,
-            Correo = c.Correo
+            Correo = c.Correo,
+            Ordenes = c.Ordenes.Select(o => new OrdeneGetDto
+            {
+                Ordenid = o.Ordenid,
+                Clienteid = o.Clienteid,
+                Fechaorden = o.Fechaorden,
+                Total = o.Total
+            }).ToList()
         });
         return clientesDto;
     }
 
     public async Task<ClienteGetDto> GetById(int id)
     {
-        var cliente = await _unitOfWork.Repository<Cliente>().GetById(id);
+        var cliente = await _unitOfWork.Clientes.GetByIdWithRealtions(id);
+        if (cliente == null) 
+            return null;
         var clienteDto = new ClienteGetDto
         {
             Clienteid = cliente.Clienteid,
             Nombre = cliente.Nombre,
-            Correo = cliente.Correo
+            Correo = cliente.Correo,
+            Ordenes = cliente.Ordenes.Select(o => new OrdeneGetDto
+            {
+                Ordenid = o.Ordenid,
+                Clienteid = o.Clienteid,
+                Fechaorden = o.Fechaorden,
+                Total = o.Total
+            }).ToList()
         };
         return clienteDto;
     }
@@ -54,7 +71,8 @@ public class ClienteService : IClienteService
     public async Task<bool> Update(int id, ClientePutDto clienteDto)
     {
         var cliente = await _unitOfWork.Repository<Cliente>().GetById(id);
-        if (cliente == null) return false;
+        if (cliente == null) 
+            return false;
         cliente.Nombre = clienteDto.Nombre;
         cliente.Correo = clienteDto.Correo;
         await _unitOfWork.Repository<Cliente>().Update(cliente);
@@ -65,7 +83,8 @@ public class ClienteService : IClienteService
     public async Task<bool> Delete(int id)
     {
         var deleted = await _unitOfWork.Repository<Cliente>().Delete(id);
-        if (!deleted) return false;
+        if (!deleted) 
+            return false;
         await _unitOfWork.SaveChanges();
         return true;
     }
@@ -73,7 +92,8 @@ public class ClienteService : IClienteService
     public async Task<bool> Patch(int id, ClientePatchDto clienteDto)
     {
         var cliente = await _unitOfWork.Repository<Cliente>().GetById(id);
-        if (cliente == null) return false;
+        if (cliente == null) 
+            return false;
         cliente.Correo = clienteDto.Correo;
         await _unitOfWork.Repository<Cliente>().Update(cliente);
         await _unitOfWork.SaveChanges();

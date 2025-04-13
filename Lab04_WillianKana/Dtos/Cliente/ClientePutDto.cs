@@ -1,4 +1,4 @@
-namespace Lab04_WillianKana.Dtos;
+namespace Lab04_WillianKana.Dtos.Cliente;
 
 public class ClientePutDto
 {

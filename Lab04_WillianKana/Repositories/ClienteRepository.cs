@@ -13,5 +13,16 @@ public class ClienteRepository : Repository<Cliente>, IClienteRepository
     {
         this._context = _context;
     }
+
+    public async Task<IEnumerable<Cliente>> GetAllWithRealtions()
+    {
+        return await _context.Clientes.Include(c => c.Ordenes).ToListAsync();
+    }
+
+    public async Task<Cliente> GetByIdWithRealtions(int id)
+    {
+        var cliente = await _context.Clientes.Include(c => c.Ordenes).FirstOrDefaultAsync(c => c.Clienteid == id);
+        return cliente!;
+    }
     
 }

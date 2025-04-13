@@ -1,4 +1,4 @@
-using Lab04_WillianKana.Dtos;
+using Lab04_WillianKana.Dtos.Cliente;
 using Lab04_WillianKana.Entities;
 
 namespace Lab04_WillianKana.Interfaces.Services;
