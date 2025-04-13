@@ -6,12 +6,27 @@ namespace Lab04_WillianKana.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _context;
+    private readonly Dictionary<Type, object> _repositories = new(); // Repositorio generico
     public IClienteRepository Clientes { get; }
 
     public UnitOfWork(ApplicationDbContext context, IClienteRepository clienteRepository)
     {
         _context = context;
         Clientes = clienteRepository;
+    }
+
+    /*
+     * Inicializar el repositorio con una entidad cualquiera(generico)
+     */
+    public IRepository<T> Repository<T>() where T : class
+    {
+        var type = typeof(T);
+        if (!_repositories.ContainsKey(type))
+        {
+            var repositoryInstance = new Repository<T>(_context);
+            _repositories.Add(type, repositoryInstance);
+        }
+        return (IRepository<T>)_repositories[type];
     }
 
     public async Task<int> SaveChanges()

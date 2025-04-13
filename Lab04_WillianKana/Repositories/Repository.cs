@@ -13,19 +13,19 @@ public class Repository<T> : IRepository<T> where T : class
         _context = context;
     }
 
-    public async Task<IEnumerable<T>> GetAll() => await _context.Set<T>().ToListAsync();
+    public virtual async Task<IEnumerable<T>> GetAll() => await _context.Set<T>().ToListAsync();
     
-    public async Task<T?> GetById(int id) => await _context.Set<T>().FindAsync(id);
+    public virtual async Task<T?> GetById(int id) => await _context.Set<T>().FindAsync(id);
     
-    public async Task Add(T entity) => await _context.Set<T>().AddAsync(entity);
+    public virtual async Task Add(T entity) => await _context.Set<T>().AddAsync(entity);
 
-    public Task Update(T entity)
+    public virtual Task Update(T entity)
     { 
         _context.Set<T>().Update(entity);
         return Task.CompletedTask;
     }
 
-    public async Task Delete(int id)
+    public virtual async Task Delete(int id)
     {
         var entity = await _context.Set<T>().FindAsync(id);
         if (entity != null)

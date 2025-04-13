@@ -13,22 +13,10 @@ public class ClienteService : IClienteService
     {
         _unitOfWork = unitOfWork;
     }
-
-    public async Task<Cliente> Add(ClientePostDto clienteDto)
-    {
-        var cliente = new Cliente
-        {
-            Nombre = clienteDto.Nombre,
-            Correo = clienteDto.Correo
-        };
-        await _unitOfWork.Clientes.Add(cliente);
-        await _unitOfWork.SaveChanges();
-        return cliente;
-    }
-
+    
     public async Task<IEnumerable<ClienteGetDto>> GetAll()
     {
-        var clientes = await _unitOfWork.Clientes.GetAll();
+        var clientes = await _unitOfWork.Repository<Cliente>().GetAll();;
         var clientesDto = clientes.Select(c => new ClienteGetDto
         {
             Clienteid = c.Clienteid,
@@ -36,6 +24,18 @@ public class ClienteService : IClienteService
             Correo = c.Correo
         });
         return clientesDto;
+    }
+    
+    public async Task<Cliente> Add(ClientePostDto clienteDto)
+    {
+        var cliente = new Cliente
+        {
+            Nombre = clienteDto.Nombre,
+            Correo = clienteDto.Correo
+        };
+        await _unitOfWork.Repository<Cliente>().Add(cliente);
+        await _unitOfWork.SaveChanges();
+        return cliente;
     }
     
 }
