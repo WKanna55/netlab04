@@ -56,16 +56,30 @@ public class ClienteService : IClienteService
         return clienteDto;
     }
     
-    public async Task<Cliente> Add(ClientePostDto clienteDto)
+    public async Task<ClienteGetDto> Add(ClientePostDto clienteDto)
     {
         var cliente = new Cliente
         {
             Nombre = clienteDto.Nombre,
             Correo = clienteDto.Correo
         };
+
         await _unitOfWork.Repository<Cliente>().Add(cliente);
         await _unitOfWork.SaveChanges();
-        return cliente;
+
+        return new ClienteGetDto
+        {
+            Clienteid = cliente.Clienteid,
+            Nombre = cliente.Nombre,
+            Correo = cliente.Correo,
+            Ordenes = cliente.Ordenes.Select(o => new OrdeneGetDto
+            {
+                Ordenid = o.Ordenid,
+                Clienteid = o.Clienteid,
+                Fechaorden = o.Fechaorden,
+                Total = o.Total
+            }).ToList()
+        };
     }
 
     public async Task<bool> Update(int id, ClientePutDto clienteDto)

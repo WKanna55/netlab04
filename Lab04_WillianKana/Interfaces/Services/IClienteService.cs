@@ -1,5 +1,4 @@
 using Lab04_WillianKana.Dtos.Cliente;
-using Lab04_WillianKana.Entities;
 
 namespace Lab04_WillianKana.Interfaces.Services;
 
@@ -7,7 +6,7 @@ public interface IClienteService
 {
     Task<IEnumerable<ClienteGetDto>> GetAll();
     Task<ClienteGetDto> GetById(int id);
-    Task<Cliente> Add(ClientePostDto clienteDto);
+    Task<ClienteGetDto> Add(ClientePostDto clienteDto);
 
     Task<bool> Update(int id, ClientePutDto clienteDto);
     

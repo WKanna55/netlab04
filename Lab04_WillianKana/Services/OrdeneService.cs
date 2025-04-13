@@ -42,7 +42,7 @@ public class OrdeneService : IOrdeneService
         return ordeneDto;
     }
 
-    public async Task<Ordene> Add(OrdenePostDto ordenePostDto)
+    public async Task<OrdeneGetDto> Add(OrdenePostDto ordenePostDto)
     {
         var ordene = new Ordene
         {
@@ -55,7 +55,14 @@ public class OrdeneService : IOrdeneService
 
         await _unitOfWork.Repository<Ordene>().Add(ordene);
         await _unitOfWork.SaveChanges();
-        return ordene;
+
+        return new OrdeneGetDto
+        {
+            Ordenid = ordene.Ordenid,
+            Clienteid = ordene.Clienteid,
+            Fechaorden = ordene.Fechaorden,
+            Total = ordene.Total
+        };
     }
 
     public async Task<bool> Update(int id, OrdenePutDto ordenePutDto)
