@@ -1,5 +1,5 @@
-using Lab04_WillianKana.Dtos.Pago;
-using Lab04_WillianKana.Interfaces.Services;
+using Lab04_WillianKana.Application.Dtos.Pago;
+using Lab04_WillianKana.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab04_WillianKana.Controllers;

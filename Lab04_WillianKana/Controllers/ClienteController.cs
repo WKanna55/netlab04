@@ -1,5 +1,5 @@
-using Lab04_WillianKana.Dtos.Cliente;
-using Lab04_WillianKana.Interfaces.Services;
+using Lab04_WillianKana.Application.Dtos.Cliente;
+using Lab04_WillianKana.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab04_WillianKana.Controllers;

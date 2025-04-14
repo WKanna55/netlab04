@@ -1,8 +1,8 @@
-using Lab04_WillianKana.Data;
-using Lab04_WillianKana.Interfaces.Repositories;
-using Lab04_WillianKana.Interfaces.Services;
-using Lab04_WillianKana.Repositories;
-using Lab04_WillianKana.Services;
+using Lab04_WillianKana.Application.Services;
+using Lab04_WillianKana.Application.Services.Base;
+using Lab04_WillianKana.Domain.Interfaces;
+using Lab04_WillianKana.Infrastructure.Data;
+using Lab04_WillianKana.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

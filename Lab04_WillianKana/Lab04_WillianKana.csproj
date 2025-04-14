@@ -20,8 +20,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data\" />
-      <Folder Include="Entities\" />
+      <ProjectReference Include="..\Lab04_WillianKana.Application\Lab04_WillianKana.Application.csproj" />
+      <ProjectReference Include="..\Lab04_WillianKana.Domain\Lab04_WillianKana.Domain.csproj" />
+      <ProjectReference Include="..\Lab04_WillianKana.Infrastructure\Lab04_WillianKana.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
